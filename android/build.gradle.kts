@@ -16,6 +16,8 @@ allprojects {
 
 android {
     namespace = "com.xamdesign.safe_device"
+    // Kept in sync with Flutter's default compileSdk so host apps are not forced to upgrade.
+    //noinspection GradleDependency
     compileSdk = 36
 
     defaultConfig {
@@ -35,12 +37,12 @@ android {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.google.android.material:material:1.9.0")
-    implementation("com.scottyab:rootbeer-lib:0.1.1")
-    implementation("com.google.android.gms:play-services-location:21.1.0")
-    implementation("androidx.annotation:annotation:1.7.1")
-    androidTestImplementation("androidx.test:runner:1.5.2")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // 1.19+ requires compileSdk 37; stay on the latest release that supports 36.
+    //noinspection GradleDependency
+    implementation("androidx.core:core:1.18.0")
+    implementation("androidx.annotation:annotation:1.11.0")
+    implementation("com.scottyab:rootbeer-lib:0.1.2")
+    implementation("com.google.android.gms:play-services-location:21.4.0")
+    androidTestImplementation("androidx.test:runner:1.7.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
 }

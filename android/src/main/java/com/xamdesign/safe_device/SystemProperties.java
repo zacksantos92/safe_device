@@ -1,5 +1,6 @@
 package com.xamdesign.safe_device;
 
+import android.annotation.SuppressLint;
 
 public class SystemProperties {
 
@@ -85,6 +86,7 @@ public class SystemProperties {
         }
     }
 
+    @SuppressLint("PrivateApi") // android.os.SystemProperties is hidden; reflection is intentional.
     private static Class<?> getSystemPropertiesClass() {
         try {
             return Class.forName("android.os.SystemProperties");

@@ -1,10 +1,10 @@
 package com.xamdesign.safe_device.ExternalStorage;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Build;
 
 public class ExternalStorageCheck {
     /**
@@ -12,20 +12,19 @@ public class ExternalStorageCheck {
      *
      * @return <code>true</code> if the application is installed on the sd card
      */
+    // The hardcoded "/sdcard/" is intentional: it matches a path, it does not build one.
+    @SuppressLint("SdCardPath")
     public static boolean isOnExternalStorage(Context context) {
-        // check for API level 8 and higher
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1) {
-            PackageManager pm = context.getPackageManager();
-            try {
-                PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
-                ApplicationInfo ai = pi.applicationInfo;
-                return (ai.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) == ApplicationInfo.FLAG_EXTERNAL_STORAGE;
-            } catch (PackageManager.NameNotFoundException e) {
-                // ignore
-            }
+        PackageManager pm = context.getPackageManager();
+        try {
+            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
+            ApplicationInfo ai = pi.applicationInfo;
+            return (ai.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) == ApplicationInfo.FLAG_EXTERNAL_STORAGE;
+        } catch (PackageManager.NameNotFoundException e) {
+            // ignore
         }
 
-        // check for API level 7 - check files dir
+        // Fallback: check the files dir path
         try {
             String filesDir = context.getFilesDir().getAbsolutePath();
             if (filesDir.startsWith("/data/")) {

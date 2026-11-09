@@ -1,10 +1,12 @@
 package com.xamdesign.safe_device.Rooted;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.scottyab.rootbeer.RootBeer;
 import android.os.Build;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class RootedCheck {
@@ -47,7 +49,7 @@ public class RootedCheck {
         // Dangerous properties check (more lenient for Samsung development devices)
         boolean dangerousProps = checkDangerousProps(isDevelopmentEnvironment);
 
-        String brand = Build.BRAND.toLowerCase();
+        String brand = Build.BRAND.toLowerCase(Locale.ROOT);
 
         // Xiaomi/Redmi/POCO: MIUI causes false positives — require multiple strong indicators
         if (brand.contains("xiaomi") || brand.contains("redmi") || brand.contains("poco")) {
@@ -96,7 +98,7 @@ public class RootedCheck {
         }
 
         // Device info
-        details.put("brand", Build.BRAND.toLowerCase());
+        details.put("brand", Build.BRAND.toLowerCase(Locale.ROOT));
         details.put("model", Build.MODEL);
         details.put("apiLevel", Build.VERSION.SDK_INT);
         details.put("buildTags", Build.TAGS != null ? Build.TAGS : "null");
@@ -177,7 +179,7 @@ public class RootedCheck {
     private static Boolean rootBeerCheck(Context context) {
         RootBeer rootBeer = new RootBeer(context);
         rootBeer.setLogging(false);
-        String brand = Build.BRAND.toLowerCase();
+        String brand = Build.BRAND.toLowerCase(Locale.ROOT);
 
         // Use more conservative detection for brands known to have false positives
         if (brand.contains(ONEPLUS) || brand.contains(MOTO) || brand.contains(XIAOMI) ||
@@ -220,10 +222,10 @@ public class RootedCheck {
                 || Build.HARDWARE.contains("goldfish")
                 || Build.HARDWARE.contains("ranchu")
                 || Build.PRODUCT.contains("vbox86p")
-                || Build.PRODUCT.toLowerCase().contains("nox")
-                || Build.BOARD.toLowerCase().contains("nox")
-                || Build.HARDWARE.toLowerCase().contains("nox")
-                || Build.MODEL.toLowerCase().contains("droid4x")
+                || Build.PRODUCT.toLowerCase(Locale.ROOT).contains("nox")
+                || Build.BOARD.toLowerCase(Locale.ROOT).contains("nox")
+                || Build.HARDWARE.toLowerCase(Locale.ROOT).contains("nox")
+                || Build.MODEL.toLowerCase(Locale.ROOT).contains("droid4x")
                 || "vbox86".equals(Build.HARDWARE);
     }
 
@@ -363,6 +365,7 @@ public class RootedCheck {
     /**
      * Get system property using reflection
      */
+    @SuppressLint("PrivateApi") // android.os.SystemProperties is hidden; reflection is intentional.
     private static String getSystemProperty(String property) {
         try {
             Class<?> systemProperties = Class.forName("android.os.SystemProperties");

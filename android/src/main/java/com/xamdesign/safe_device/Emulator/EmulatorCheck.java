@@ -6,6 +6,7 @@ import com.xamdesign.safe_device.SystemProperties;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.List;
 
 public class EmulatorCheck {
@@ -77,10 +78,10 @@ public class EmulatorCheck {
                 || Build.HARDWARE.contains("goldfish")
                 || Build.HARDWARE.contains("ranchu")
                 || Build.PRODUCT.contains("vbox86p")
-                || Build.PRODUCT.toLowerCase().contains("nox")
-                || Build.BOARD.toLowerCase().contains("nox")
-                || Build.HARDWARE.toLowerCase().contains("nox")
-                || Build.MODEL.toLowerCase().contains("droid4x")
+                || Build.PRODUCT.toLowerCase(Locale.ROOT).contains("nox")
+                || Build.BOARD.toLowerCase(Locale.ROOT).contains("nox")
+                || Build.HARDWARE.toLowerCase(Locale.ROOT).contains("nox")
+                || Build.MODEL.toLowerCase(Locale.ROOT).contains("droid4x")
                 || "vbox86".equals(Build.HARDWARE)
                 // LDPlayer specific checks
                 || isLDPlayer()
@@ -100,7 +101,7 @@ public class EmulatorCheck {
      * Used to avoid false positives in broad emulator checks like Build.HOST.
      */
     private static boolean isKnownRealDeviceManufacturer() {
-        String manufacturer = Build.MANUFACTURER.toLowerCase();
+        String manufacturer = Build.MANUFACTURER.toLowerCase(Locale.ROOT);
         return manufacturer.contains("samsung")
                 || manufacturer.contains("sony")
                 || manufacturer.contains("xiaomi")
@@ -120,17 +121,17 @@ public class EmulatorCheck {
      * Enhanced LDPlayer detection
      */
     private static boolean isLDPlayer() {
-        return Build.MANUFACTURER.toLowerCase().contains("changwan")
-                || Build.BRAND.toLowerCase().contains("changwan")
-                || Build.MODEL.toLowerCase().contains("changwan")
-                || Build.DEVICE.toLowerCase().contains("changwan")
-                || Build.PRODUCT.toLowerCase().contains("changwan")
-                || Build.FINGERPRINT.toLowerCase().contains("changwan")
-                || Build.MANUFACTURER.toLowerCase().contains("ldplayer")
-                || Build.BRAND.toLowerCase().contains("ldplayer")
-                || Build.MODEL.toLowerCase().contains("ldplayer")
-                || Build.HARDWARE.toLowerCase().contains("lkm")
-                || Build.HARDWARE.toLowerCase().contains("ttvm")
+        return Build.MANUFACTURER.toLowerCase(Locale.ROOT).contains("changwan")
+                || Build.BRAND.toLowerCase(Locale.ROOT).contains("changwan")
+                || Build.MODEL.toLowerCase(Locale.ROOT).contains("changwan")
+                || Build.DEVICE.toLowerCase(Locale.ROOT).contains("changwan")
+                || Build.PRODUCT.toLowerCase(Locale.ROOT).contains("changwan")
+                || Build.FINGERPRINT.toLowerCase(Locale.ROOT).contains("changwan")
+                || Build.MANUFACTURER.toLowerCase(Locale.ROOT).contains("ldplayer")
+                || Build.BRAND.toLowerCase(Locale.ROOT).contains("ldplayer")
+                || Build.MODEL.toLowerCase(Locale.ROOT).contains("ldplayer")
+                || Build.HARDWARE.toLowerCase(Locale.ROOT).contains("lkm")
+                || Build.HARDWARE.toLowerCase(Locale.ROOT).contains("ttvm")
                 || "LDPlayer".equals(Build.MODEL)
                 || "Chang Wan".equals(Build.MANUFACTURER)
                 || "ttVM_Hdragon".equals(Build.DEVICE)
@@ -142,14 +143,14 @@ public class EmulatorCheck {
      * Enhanced MEmu detection
      */
     private static boolean isMEmu() {
-        return Build.MANUFACTURER.toLowerCase().contains("memu")
-                || Build.BRAND.toLowerCase().contains("memu")
-                || Build.MODEL.toLowerCase().contains("memu")
-                || Build.DEVICE.toLowerCase().contains("memu")
-                || Build.PRODUCT.toLowerCase().contains("memu")
+        return Build.MANUFACTURER.toLowerCase(Locale.ROOT).contains("memu")
+                || Build.BRAND.toLowerCase(Locale.ROOT).contains("memu")
+                || Build.MODEL.toLowerCase(Locale.ROOT).contains("memu")
+                || Build.DEVICE.toLowerCase(Locale.ROOT).contains("memu")
+                || Build.PRODUCT.toLowerCase(Locale.ROOT).contains("memu")
                 || "Microvirt".equals(Build.MANUFACTURER)
                 || "MEmu".equals(Build.MODEL)
-                || Build.HARDWARE.toLowerCase().contains("memu")
+                || Build.HARDWARE.toLowerCase(Locale.ROOT).contains("memu")
                 || checkFiles(MEMU_FILES);
     }
 
@@ -157,11 +158,11 @@ public class EmulatorCheck {
      * Enhanced BlueStacks detection
      */
     private static boolean isBlueStacks() {
-        return Build.MANUFACTURER.toLowerCase().contains("bluestacks")
-                || Build.BRAND.toLowerCase().contains("bluestacks")
-                || Build.MODEL.toLowerCase().contains("bluestacks")
-                || Build.DEVICE.toLowerCase().contains("bluestacks")
-                || Build.PRODUCT.toLowerCase().contains("bluestacks")
+        return Build.MANUFACTURER.toLowerCase(Locale.ROOT).contains("bluestacks")
+                || Build.BRAND.toLowerCase(Locale.ROOT).contains("bluestacks")
+                || Build.MODEL.toLowerCase(Locale.ROOT).contains("bluestacks")
+                || Build.DEVICE.toLowerCase(Locale.ROOT).contains("bluestacks")
+                || Build.PRODUCT.toLowerCase(Locale.ROOT).contains("bluestacks")
                 || "BlueStacks".equals(Build.MANUFACTURER)
                 || "QC_Reference_Phone".equals(Build.BOARD) && !isKnownRealDeviceManufacturer();
     }
@@ -170,12 +171,12 @@ public class EmulatorCheck {
      * MuMu Player (NetEase) detection
      */
     private static boolean isMuMuPlayer() {
-        return Build.MANUFACTURER.toLowerCase().contains("netease")
-                || Build.BRAND.toLowerCase().contains("netease")
-                || Build.MODEL.toLowerCase().contains("mumu")
-                || Build.PRODUCT.toLowerCase().contains("nemu")
-                || Build.DEVICE.toLowerCase().contains("mumu")
-                || Build.FINGERPRINT.toLowerCase().contains("netease");
+        return Build.MANUFACTURER.toLowerCase(Locale.ROOT).contains("netease")
+                || Build.BRAND.toLowerCase(Locale.ROOT).contains("netease")
+                || Build.MODEL.toLowerCase(Locale.ROOT).contains("mumu")
+                || Build.PRODUCT.toLowerCase(Locale.ROOT).contains("nemu")
+                || Build.DEVICE.toLowerCase(Locale.ROOT).contains("mumu")
+                || Build.FINGERPRINT.toLowerCase(Locale.ROOT).contains("netease");
     }
 
     /**
