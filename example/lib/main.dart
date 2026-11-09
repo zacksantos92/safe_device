@@ -4,11 +4,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:safe_device/safe_device.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -62,15 +64,15 @@ class _MyAppState extends State<MyApp> {
     }
 
     setState(() {
-      this.isJailBroken = isJailBroken;
-      this.isJailBrokenCustom = isJailBrokenCustom;
-      this.isMockLocation = isMockLocation;
-      this.isRealDevice = isRealDevice;
-      this.isOnExternalStorage = isOnExternalStorage;
-      this.isSafeDevice = isSafeDevice;
-      this.isDevelopmentModeEnable = isDevelopmentModeEnable;
-      this.jailbreakDetails = jailbreakDetails;
-      this.rootDetectionDetails = rootDetectionDetails;
+      isJailBroken = isJailBroken;
+      isJailBrokenCustom = isJailBrokenCustom;
+      isMockLocation = isMockLocation;
+      isRealDevice = isRealDevice;
+      isOnExternalStorage = isOnExternalStorage;
+      isSafeDevice = isSafeDevice;
+      isDevelopmentModeEnable = isDevelopmentModeEnable;
+      jailbreakDetails = jailbreakDetails;
+      rootDetectionDetails = rootDetectionDetails;
     });
   }
 
@@ -122,8 +124,8 @@ class _MyAppState extends State<MyApp> {
         ...jailbreakDetails.entries
             .where((entry) => entry.key != 'isSimulator')
             .map((entry) => buildInfoRow(
-                '${entry.key}', entry.value is bool ? entry.value : false))
-            .toList(),
+                entry.key, entry.value is bool ? entry.value : false))
+            ,
       ],
     );
   }
@@ -163,8 +165,8 @@ class _MyAppState extends State<MyApp> {
         // Detection results
         ...rootDetectionDetails.entries
             .where((entry) => entry.value is bool)
-            .map((entry) => buildInfoRow('${entry.key}', entry.value))
-            .toList(),
+            .map((entry) => buildInfoRow(entry.key, entry.value))
+            ,
         // System properties
         if (rootDetectionDetails.containsKey('ro.debuggable'))
           Card(

@@ -1,18 +1,19 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:safe_device/safe_device_config.dart';
 
 class SafeDevice {
-  static const MethodChannel _channel = const MethodChannel('safe_device');
+  static const MethodChannel _channel = MethodChannel('safe_device');
 
   static SafeDeviceConfig? _safeDeviceConfig;
   static bool isInitiated = false;
 
   static void init(SafeDeviceConfig config) {
     if (isInitiated) {
-      print('SafeDevice has already been initiated, skipping');
+      debugPrint('SafeDevice has already been initiated, skipping');
       return;
     }
     _channel.invokeMethod('init', config.toMap());
@@ -25,7 +26,7 @@ class SafeDevice {
     if (isInitiated) {
       return;
     }
-    const SafeDeviceConfig defaultConfig = const SafeDeviceConfig();
+    const SafeDeviceConfig defaultConfig = SafeDeviceConfig();
     init(defaultConfig);
   }
 
@@ -36,7 +37,7 @@ class SafeDevice {
       final bool isJailBroken = await _channel.invokeMethod('isJailBroken');
       return isJailBroken;
     } catch (e) {
-      print('Error checking JailBroken status: $e');
+      debugPrint('Error checking JailBroken status: $e');
       return false;
     }
   }
@@ -77,7 +78,7 @@ class SafeDevice {
         return !await isRealDevice || await isJailBroken;
       }
     } catch (e) {
-      print('Error checking MockLocation status: $e');
+      debugPrint('Error checking MockLocation status: $e');
       return false;
     }
   }
@@ -89,7 +90,7 @@ class SafeDevice {
       final bool isRealDevice = await _channel.invokeMethod('isRealDevice');
       return isRealDevice;
     } catch (e) {
-      print('Error checking RealDevice status: $e');
+      debugPrint('Error checking RealDevice status: $e');
       return false;
     }
   }
@@ -103,7 +104,7 @@ class SafeDevice {
           await _channel.invokeMethod('isOnExternalStorage');
       return isOnExternalStorage;
     } catch (e) {
-      print('Error checking ExternalStorage status: $e');
+      debugPrint('Error checking ExternalStorage status: $e');
       return false;
     }
   }
@@ -120,7 +121,7 @@ class SafeDevice {
 
       return !(jailBroken || mockLocation || !realDevice || onExternalStorage);
     } catch (e) {
-      print('Error checking SafeDevice status: $e');
+      debugPrint('Error checking SafeDevice status: $e');
       return false;
     }
   }
@@ -134,7 +135,7 @@ class SafeDevice {
           await _channel.invokeMethod('isDevelopmentModeEnable');
       return isDevModeEnabled;
     } catch (e) {
-      print('Error checking DevelopmentMode status: $e');
+      debugPrint('Error checking DevelopmentMode status: $e');
       return false;
     }
   }
@@ -148,7 +149,7 @@ class SafeDevice {
           await _channel.invokeMethod('usbDebuggingCheck');
       return usbDebuggingEnabled;
     } catch (e) {
-      print('Error checking USB Debugging status: $e');
+      debugPrint('Error checking USB Debugging status: $e');
       return false;
     }
   }
